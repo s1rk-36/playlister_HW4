@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth'
 import Copyright from './Copyright'
 
@@ -15,6 +16,7 @@ import Typography from '@mui/material/Typography';
 
 export default function RegisterScreen() {
     const { auth } = useContext(AuthContext);
+    const {store} = useContext(GlobalStoreContext);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -106,6 +108,7 @@ export default function RegisterScreen() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            
                         >
                             Sign Up
                         </Button>
