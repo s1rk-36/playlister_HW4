@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth'
 import Copyright from './Copyright'
@@ -13,10 +13,14 @@ import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import ErrorModal from './ErrorModal';
 
 export default function RegisterScreen() {
     const { auth } = useContext(AuthContext);
     const {store} = useContext(GlobalStoreContext);
+    const[error, setError] = useState(false);
+    const[errorMessage, setErrorMessage] = useState("");
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -27,8 +31,15 @@ export default function RegisterScreen() {
             formData.get('email'),
             formData.get('password'),
             formData.get('passwordVerify')
-        );
+        ).catch((err) =>{
+            setErrorMessage(err.response?.data?.errorMessage);
+            setError(true);
+        });
     };
+
+    const hideAlert = () => {
+        setError(false);
+    }
 
     return (
             <Container component="main" maxWidth="xs">
@@ -112,6 +123,11 @@ export default function RegisterScreen() {
                         >
                             Sign Up
                         </Button>
+                        <ErrorModal
+                            propOpen ={error}
+                            propMessage={errorMessage}
+                            hideAlert={hideAlert}
+                            />
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link href="/login/" variant="body2">
@@ -123,5 +139,6 @@ export default function RegisterScreen() {
                 </Box>
                 <Copyright sx={{ mt: 5 }} />
             </Container>
+            
     );
 }

@@ -40,7 +40,7 @@ const CurrentModal = {
     NONE : "NONE",
     DELETE_LIST : "DELETE_LIST",
     EDIT_SONG : "EDIT_SONG",
-    REMOVE_SONG : "REMOVE_SONG"
+    REMOVE_SONG : "REMOVE_SONG",
 }
 
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
@@ -196,6 +196,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null
                 });
             }
+
             case GlobalStoreActionType.HIDE_MODALS: {
                 return setStore({
                     currentModal : CurrentModal.NONE,
@@ -352,6 +353,7 @@ function GlobalStoreContextProvider(props) {
             payload: {}
         });    
     }
+    
     store.isDeleteListModalOpen = () => {
         return store.currentModal === CurrentModal.DELETE_LIST;
     }
