@@ -318,15 +318,17 @@ function GlobalStoreContextProvider(props) {
         }
         getListToDelete(id);
     }
-    store.deleteList = function (id) {
-        async function processDelete(id) {
-            let response = await api.deletePlaylistById(id);
-            if (response.data.success) {
-                store.loadIdNamePairs();
-                history.push("/");
-            }
+    store.deleteList = async function (id) {
+        console.log(id);
+        try{
+            const deleteRes = await api.deletePlaylistById(id);
         }
-        processDelete(id);
+        catch(e){
+            console.error(e);
+        }
+        store.loadIdNamePairs();
+        history.push("/");
+
     }
     store.deleteMarkedList = function() {
         store.deleteList(store.listIdMarkedForDeletion);

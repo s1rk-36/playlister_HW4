@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import AuthContext from '../auth'
 
 import Copyright from './Copyright'
@@ -15,9 +15,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import ErrorModal from './ErrorModal';
 
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -25,9 +28,16 @@ export default function LoginScreen() {
         auth.loginUser(
             formData.get('email'),
             formData.get('password')
-        );
-            
+        ).catch((err) => {
+            setErrorMessage(err.response?.data?.errorMessage);
+            setError(true);
+        });
+
     };
+
+    const hideAlert = () => {
+        setError(false);
+    }
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
@@ -95,6 +105,11 @@ export default function LoginScreen() {
                         >
                             Sign In
                         </Button>
+                        <ErrorModal
+                            propOpen = {error}
+                            propMessage={errorMessage}
+                            hideAlert={hideAlert}
+                        />
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">

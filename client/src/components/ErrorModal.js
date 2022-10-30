@@ -1,10 +1,6 @@
-import { useContext } from 'react'
-import GlobalStoreContext from '../store';
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
 import Alert from '@mui/material/Alert';
-import { Button } from '@mui/material';
+import { AlertTitle, Button, Dialog } from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -19,23 +15,22 @@ const style = {
 };
 
 export default function ErrorModal(props) {
-
-    let modalClass = "modal-is-visible";
-
-    return(
-        <Modal
-            open = {props.propOpen}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Box sx={style}>
-            <Alert severity="error">{props.propMessage}</Alert>
-            <Button 
-            variant='contained'
-            color="error" 
+    const button = (
+        <Button 
+            variant='outlined'
+            color="warning" 
             onClick={props.hideAlert}
             > X </Button>
-            </Box> 
-        </Modal>
+    );
+    return(
+        
+        <Dialog open = {props.propOpen}>
+        <Alert
+            severity="warning"
+        >
+        <AlertTitle >{props.propMessage}{button}</AlertTitle>
+        </Alert>
+        </Dialog>
+
     )
 }
