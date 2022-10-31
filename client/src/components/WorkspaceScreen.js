@@ -17,17 +17,17 @@ function WorkspaceScreen() {
     store.history = useHistory();
     
     let modalJSX = "";
-    if (store.isEditSongModalOpen()) {
+    if (store.isEditSongModalOpen() && store.currentList !== null) {
         modalJSX = <MUIEditSongModal />;
     }
-    else if (store.isRemoveSongModalOpen()) {
+    else if (store.isRemoveSongModalOpen() && store.currentList !== null) {
         modalJSX = <MUIRemoveSongModal />;
     }
     return (
         <Box>
         <List 
             id="playlist-cards" 
-            sx={{ width: '100%', bgcolor: 'background.paper' }}
+            sx={{ width: '100%', bgcolor: 'primary'}}
         >
             {
                 store.currentList.songs.map((song, index) => (
