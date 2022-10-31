@@ -15,6 +15,7 @@ const style = {
     boxShadow: 24,
     label: 'Show',
     p: 2,
+    borderRadius: '10px',
 };
 
 export default function MUIEditSongModal() {

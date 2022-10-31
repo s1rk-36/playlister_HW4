@@ -38,9 +38,7 @@ function SongCard(props) {
     }
     function handleClick(event) {
         // DOUBLE CLICK IS FOR SONG EDITING
-        
         store.showEditSongModal(index, song);
-        console.log(store.currentModal);
     }
 
     let cardClass = "list-card unselected-list-card";
