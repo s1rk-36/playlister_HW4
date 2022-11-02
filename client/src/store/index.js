@@ -36,6 +36,7 @@ export const GlobalStoreActionType = {
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
 const tps = new jsTPS();
 
+
 const CurrentModal = {
     NONE : "NONE",
     DELETE_LIST : "DELETE_LIST",
@@ -46,6 +47,8 @@ const CurrentModal = {
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
 // AVAILABLE TO THE REST OF THE APPLICATION
 function GlobalStoreContextProvider(props) {
+
+    
     // THESE ARE ALL THE THINGS OUR DATA STORE WILL MANAGE
     const [store, setStore] = useState({
         currentModal : CurrentModal.NONE,
@@ -59,7 +62,7 @@ function GlobalStoreContextProvider(props) {
         listMarkedForDeletion: null
     });
     const history = useHistory();
-
+    document.onkeydown = store.handleKeyDown;
     console.log("inside useGlobalStore");
 
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
@@ -259,6 +262,28 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.CLOSE_CURRENT_LIST,
             payload: {}
         });
+    }
+
+    store.handleKeyDown = function(e) {
+        if(e.ctrlKey){
+            if(e.key === 'y'){
+                if(store.canRedo()){
+                    store.redo();
+                    //store.setStateWithUpdatedList(store.state.currentList);
+                }
+            }
+            if(e.key === 'z'){
+                if(store.canUndo()){
+                    store.undo();
+                    //store.setStateWithUpdatedList(store.state.currentList);
+                }
+            }
+
+        }
+    }
+
+    store.clearTransactions = function () {
+        tps.clearAllTransactions();
     }
 
     // THIS FUNCTION CREATES A NEW LIST

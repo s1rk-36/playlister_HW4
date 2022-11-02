@@ -12,6 +12,7 @@ import { GlobalStoreContext } from '../store/index.js'
     
     @author McKilla Gorilla
 */
+
 function WorkspaceScreen() {
     const { store } = useContext(GlobalStoreContext);
     store.history = useHistory();
